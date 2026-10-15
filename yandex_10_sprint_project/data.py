@@ -13,3 +13,15 @@ user_body = {
 products_ids = {
     "ids": [1, 2, 3]
 }
+
+kit_body = {
+       "name": "Мой набор",
+       "card": {
+           "id": 1,
+           "name": "Под ситуацию"
+       },
+       "productsList": null,
+       "id": 7,
+       "productsCount": 0
+   }
+

@@ -12,7 +12,15 @@ CREATE_USER_PATH = "/api/v1/users/"
 API_TOKEN = "authToken: 'jknnFApafP4awfAIFfafam2fma'"
 PRODUCTS_KITS_PATH = "/api/v1/products/kits/"
 CREATE_PRODUCT_KITS = "/api/v1/kits"
-GET_KITS_CREATED_USER = {"Authorization": "Bearer {API_TOKEN}"}
-python import os from dotenv import load_dotenv
-# Загружаем переменные из файла .env load_dotenv()
-# Берем токен из переменной окружения API_TOKEN = os.getenv("API_TOKEN")
+import os
+from dotenv import load_dotenv
+
+# Загружаем переменные из файла .env
+load_dotenv()
+
+# Берем токен из переменной окружения
+API_TOKEN = os.getenv("API_TOKEN")
+
+# Формируем заголовки
+# ВАЖНО: Используем f-строку, чтобы вставить токен внутрь строки
+GET_KITS_CREATED_USER = {"Authorization": f"Bearer {API_TOKEN}"}
