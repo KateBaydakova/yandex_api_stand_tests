@@ -20,7 +20,7 @@ kit_body = {
            "id": 1,
            "name": "Под ситуацию"
        },
-       "productsList": null,
+       "productsList": None,
        "id": 7,
        "productsCount": 0
    }
