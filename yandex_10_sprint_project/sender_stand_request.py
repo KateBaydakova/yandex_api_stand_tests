@@ -1,17 +1,9 @@
 import requests
 
 def post_new_client_kit(kit_body, auth_token):
-    """
-    Отправляет POST-запрос на создание нового набора.
     
-    :param kit_body: Словарь с данными для создания набора (тело запроса).
-    :param auth_token: Строка с токеном авторизации (без префикса 'Bearer').
-    :return: Объект ответа от сервера (response).
-    """
-    # 1. Формируем URL (забери его из configuration.py или пропиши здесь для теста)
-    # Лучше вынести URL в configuration.py, но для примера оставим так:
-    base_url = "https://your-api-url.com"  # <-- Вставь сюда реальный URL из задания
-    endpoint = "/api/kits"               # <-- Путь к эндпоинту создания набора (узнай в документации)
+    base_url = "https://084b5ea6-f033-4027-a83f-121c16983fdb.serverhub.praktikum-services.ru"
+    endpoint = "/api/v1/kits"             
     url = f"{base_url}{endpoint}"
 
     # 2. Формируем заголовки (обязательно с Authorization)

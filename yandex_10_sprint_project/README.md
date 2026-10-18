@@ -38,7 +38,11 @@ pytest
 - configuration.py - настройки и URL
 - data.py - тестовые данные
 - create_kit_name_kit_test.py - тесты для создания наборов
+- create_user_test.py - тест для создания пользователя
 - .gitignore - игнорируемые файлы
+- .env - реальный токен проекта
+- sender_stand_request.py - запросы на создание набора и формирование заголовков
+- README.md - о проекте
 
 ## **Автор**
 
