@@ -35,9 +35,9 @@ def test_create_kit_success():
 def test_positive_assert_name_one_letter():
     """
     Позитивный тест: имя состоит из 1 символа ('a').
-    Ожидаемый результат: статус 201, имя в ответе совпадает с именем в запросе.
+    Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
     """
-    # 1. Подготовка данных (то, что ты просила)
+    # 1. Подготовка данных
     kit_body = {
         "name": "a"
     }
@@ -65,9 +65,9 @@ def test_positive_assert_name_one_letter():
     def test_positive_assert_name_511_letters():
     """
     Позитивный тест: имя состоит из 511 символов ('Ab').
-    Ожидаемый результат: статус 201, имя в ответе совпадает с именем в запросе.
+    Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
     """
-    # 1. Подготовка данных (то, что ты просила)
+    # 1. Подготовка данных
     kit_body = {    "name":"AbcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdAbcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabC"}
 
     # 2. Действие: вызываем функцию
@@ -167,9 +167,9 @@ def test_negative_assert_code_400_long_name():
     def test_positive_assert_name_english_letters():
     """
     Позитивный тест: имя состоит из английских символов ('QWErty').
-    Ожидаемый результат: статус 201, имя в ответе совпадает с именем в запросе.
+    Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
     """
-    # 1. Подготовка данных (то, что ты просила)
+    # 1. Подготовка данных
     kit_body = {
 "name": "QWErty"
 }
@@ -197,9 +197,9 @@ def test_negative_assert_code_400_long_name():
     def test_positive_assert_name_russian_letters():
         """
         Позитивный тест: имя состоит из русских символов ('Мария').
-        Ожидаемый результат: статус 201, имя в ответе совпадает с именем в запросе.
+        Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
         """
-        # 1. Подготовка данных (то, что ты просила)
+        # 1. Подготовка данных
         kit_body = {
 "name": "Мария"
 }
@@ -227,9 +227,9 @@ def test_negative_assert_code_400_long_name():
         def test_positive_assert_name_special_symbols():
                 """
                 Позитивный тест: имя состоит из спецсимволов ('"№%@",').
-                Ожидаемый результат: статус 201, имя в ответе совпадает с именем в запросе.
+                Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
                 """
-                # 1. Подготовка данных (то, что ты просила)
+                # 1. Подготовка данных
                 kit_body = {
 "name": ""№%@","
 }
@@ -256,10 +256,10 @@ def test_negative_assert_code_400_long_name():
 
                  def test_positive_assert_name_blank_spaces():
                   """
-                                 Позитивный тест: имя состоит из спецсимволов ('Человек и КО').
-                                 Ожидаемый результат: статус 201, имя в ответе совпадает с именем в запросе.
+                                 Позитивный тест: в имени есть пробелы ('Человек и КО').
+                                 Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
                                  """
-                                 # 1. Подготовка данных (то, что ты просила)
+                                 # 1. Подготовка данных
                                  kit_body = {
 "name": " Человек и КО "
 }
@@ -286,10 +286,10 @@ def test_negative_assert_code_400_long_name():
 
 def test_positive_assert_name_numbers():
                   """
-                                 Позитивный тест: имя состоит из спецсимволов ('123').
-                                 Ожидаемый результат: статус 201, имя в ответе совпадает с именем в запросе.
+                                 Позитивный тест: имя состоит из цифр ('123').
+                                 Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
                                  """
-                                 # 1. Подготовка данных (то, что ты просила)
+                                 # 1. Подготовка данных
                                  kit_body = {
 "name": "123"
 }
@@ -317,10 +317,10 @@ def test_positive_assert_name_numbers():
 
 def test_negative_assert_code_400_empty_parameter():
     """
-    Негативный тест: имя пустое (_ символов).
+    Негативный тест: параметр не передан в запросе (_ символов).
     Ожидаемый результат: статус 400, сервер отвергает запрос.
     """
-    # 1. Подготовка данных: ПУСТОЕ имя
+    # 1. Подготовка данных: параметр не передан в запросе
     kit_body = {
 }
 
@@ -354,10 +354,10 @@ def test_negative_assert_code_400_empty_parameter():
 
 def test_negative_assert_code_400_another_parameter():
     """
-    Негативный тест: имя пустое (число "123").
+    Негативный тест: другой тип параметра (число "123").
     Ожидаемый результат: статус 400, сервер отвергает запрос.
     """
-    # 1. Подготовка данных: ПУСТОЕ имя
+    # 1. Подготовка данных: другой тип параметра - число
     kit_body = {
 "name": 123
 }
