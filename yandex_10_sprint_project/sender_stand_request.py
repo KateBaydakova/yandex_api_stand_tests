@@ -2,7 +2,7 @@ import requests
 
 def post_new_user(user_body):
     """Создает пользователя."""
-    base_url = "https://a3b035f9-f354-4250-a337-a67238be4fde.serverhub.praktikum-services.ru"
+    base_url = "https://7a7b25c2-e735-4d80-8dc0-73f13216a708.serverhub.praktikum-services.ru"
     endpoint = "/api/v1/users"
     url = f"{base_url}{endpoint}"
     
@@ -14,7 +14,7 @@ def post_new_user(user_body):
 
 def post_new_client_kit(kit_body, auth_token):
     """Создает набор для пользователя."""
-    base_url = "https://a3b035f9-f354-4250-a337-a67238be4fde.serverhub.praktikum-services.ru"
+    base_url = "https://7a7b25c2-e735-4d80-8dc0-73f13216a708.serverhub.praktikum-services.ru"
     endpoint = "/api/v1/kits"
     url = f"{base_url}{endpoint}"
     

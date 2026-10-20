@@ -62,7 +62,7 @@ def test_positive_assert_name_one_letter():
 
     # Тест 2 (позитивный): Допустимое количество символов (511)
 
-    def test_positive_assert_name_511_letters():
+def test_positive_assert_name_511_letters():
     """
     Позитивный тест: имя состоит из 511 символов ('Ab').
     Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
@@ -164,7 +164,7 @@ def test_negative_assert_code_400_long_name():
 
     # Тест 5 (позитивный): Разрешены английские буквы:
 
-    def test_positive_assert_name_english_letters():
+def test_positive_assert_name_english_letters():
     """
     Позитивный тест: имя состоит из английских символов ('QWErty').
     Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
@@ -194,124 +194,112 @@ def test_negative_assert_code_400_long_name():
 
     # Тест 6 (позитивный): Разрешены русские буквы:
 
-    def test_positive_assert_name_russian_letters():
-        """
-        Позитивный тест: имя состоит из русских символов ('Мария').
-        Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
-        """
-        # 1. Подготовка данных
-        kit_body = {
-"name": "Мария"
-}
+def test_positive_assert_name_russian_letters():
+    """
+    Позитивный тест: имя состоит из русских символов ('Мария').
+    Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
+    """
+    # 1. Подготовка данных
+    kit_body = {
+        "name": "Мария"
+    }
+    # 2. Действие: вызываем функцию
+    response = post_new_client_kit(kit_body=kit_body, auth_token=API_TOKEN)
+    # 3. Проверка 1: Статус код должен быть 201
+    assert response.status_code == 201, f"Ожидался статус 201, но получен {response.status_code}. Ответ сервера: {response.text}"
     
-        # 2. Действие: вызываем функцию
-        response = post_new_client_kit(kit_body=kit_body, auth_token=API_TOKEN)
-    
-        # 3. Проверка 1: Статус код должен быть 201
-        assert response.status_code == 201, f"Ожидался статус 201, но получен {response.status_code}. Ответ сервера: {response.text}"
-    
-        # 4. Проверка 2: Парсим JSON из ответа и сверяем имя
-        response_data = response.json()
+    # 4. Проверка 2: Парсим JSON из ответа и сверяем имя
+    response_data = response.json()
         
-        # Если сервер возвращает имя в поле 'name' (часто бывает 'name' или 'kit_name')
-        # Проверь документацию API, какое именно поле возвращает сервер.
-        # Допустим, сервер возвращает {"id": 123, "name": "Мaрия"}
+    # Если сервер возвращает имя в поле 'name' (часто бывает 'name' или 'kit_name')
+    # Проверь документацию API, какое именно поле возвращает сервер.
+    # Допустим, сервер возвращает {"id": 123, "name": "Мaрия"}
         
-        assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
-        assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
+    assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
+    assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
     
-        print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
+    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
 
         # Тест 7 (позитивный): Разрешены спецсимволы:
 
-        def test_positive_assert_name_special_symbols():
-                """
-                Позитивный тест: имя состоит из спецсимволов ('"№%@",').
-                Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
-                """
-                # 1. Подготовка данных
-                kit_body = {
-"name": ""№%@","
+def test_positive_assert_name_special_symbols():
+    """
+    Позитивный тест: имя состоит из спецсимволов ('"№%@",').
+    Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
+    """
+    # 1. Подготовка данных
+    kit_body = {
+        "name": "№%@,"
 }
-            
-                # 2. Действие: вызываем функцию
-                response = post_new_client_kit(kit_body=kit_body, auth_token=API_TOKEN)
-            
-                # 3. Проверка 1: Статус код должен быть 201
-                assert response.status_code == 201, f"Ожидался статус 201, но получен {response.status_code}. Ответ сервера: {response.text}"
-            
-                # 4. Проверка 2: Парсим JSON из ответа и сверяем имя
-                response_data = response.json()
+    # 2. Действие: вызываем функцию
+    response = post_new_client_kit(kit_body=kit_body, auth_token=API_TOKEN)
+    # 3. Проверка 1: Статус код должен быть 201
+    assert response.status_code == 201, f"Ожидался статус 201, но получен {response.status_code}. Ответ сервера: {response.text}"
+    # 4. Проверка 2: Парсим JSON из ответа и сверяем имя
+    response_data = response.json()
                 
-                # Если сервер возвращает имя в поле 'name' (часто бывает 'name' или 'kit_name')
-                # Проверь документацию API, какое именно поле возвращает сервер.
-                # Допустим, сервер возвращает {"id": 123, "name": ""№%@","}
+    # Если сервер возвращает имя в поле 'name' (часто бывает 'name' или 'kit_name')
+    # Проверь документацию API, какое именно поле возвращает сервер.
+    # Допустим, сервер возвращает {"id": 123, "name": "№%@,"}
                 
-                assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
-                assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
+    assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
+    assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
             
-                print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
+    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
 
                  # Тест 8 (позитивный): Разрешены пробелы:
 
-                 def test_positive_assert_name_blank_spaces():
-                  """
-                                 Позитивный тест: в имени есть пробелы ('Человек и КО').
-                                 Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
-                                 """
-                                 # 1. Подготовка данных
-                                 kit_body = {
-"name": " Человек и КО "
+def test_positive_assert_name_blank_spaces():
+    """
+    Позитивный тест: в имени есть пробелы ('Человек и КО').
+    Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
+    """
+    # 1. Подготовка данных
+    kit_body = {
+        "name": " Человек и КО "
 }
-                             
-                                 # 2. Действие: вызываем функцию
-                                 response = post_new_client_kit(kit_body=kit_body, auth_token=API_TOKEN)
-                             
-                                 # 3. Проверка 1: Статус код должен быть 201
-                                 assert response.status_code == 201, f"Ожидался статус 201, но получен {response.status_code}. Ответ сервера: {response.text}"
-                             
-                                 # 4. Проверка 2: Парсим JSON из ответа и сверяем имя
-                                 response_data = response.json()
+    # 2. Действие: вызываем функцию
+    response = post_new_client_kit(kit_body=kit_body, auth_token=API_TOKEN)
+    # 3. Проверка 1: Статус код должен быть 201
+    assert response.status_code == 201, f"Ожидался статус 201, но получен {response.status_code}. Ответ сервера: {response.text}"
+    # 4. Проверка 2: Парсим JSON из ответа и сверяем имя
+    response_data = response.json()
                                  
-                                 # Если сервер возвращает имя в поле 'name' (часто бывает 'name' или 'kit_name')
-                                 # Проверь документацию API, какое именно поле возвращает сервер.
-                                 # Допустим, сервер возвращает {"id": 123, "name": ""№%@","}
+    # Если сервер возвращает имя в поле 'name' (часто бывает 'name' или 'kit_name')
+    # Проверь документацию API, какое именно поле возвращает сервер.
+    # Допустим, сервер возвращает {"id": 123, "name": ""№%@","}
                                  
-                                 assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
-                                 assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
+    assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
+    assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
                              
-                                 print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
+    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
 
                   # Тест 9 (позитивный): Разрешены цифры:
 
 def test_positive_assert_name_numbers():
-                  """
-                                 Позитивный тест: имя состоит из цифр ('123').
-                                 Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
-                                 """
-                                 # 1. Подготовка данных
-                                 kit_body = {
-"name": "123"
+    """
+    Позитивный тест: имя состоит из цифр ('123').
+    Ожидаемый результат: статус 201, name в ответе совпадает с name в запросе.
+    """
+    # 1. Подготовка данных
+    kit_body = {
+        "name": "123"
 }
-}
-                             
-                                 # 2. Действие: вызываем функцию
-                                 response = post_new_client_kit(kit_body=kit_body, auth_token=API_TOKEN)
-                             
-                                 # 3. Проверка 1: Статус код должен быть 201
-                                 assert response.status_code == 201, f"Ожидался статус 201, но получен {response.status_code}. Ответ сервера: {response.text}"
-                             
-                                 # 4. Проверка 2: Парсим JSON из ответа и сверяем имя
-                                 response_data = response.json()
+    # 2. Действие: вызываем функцию
+    response = post_new_client_kit(kit_body=kit_body, auth_token=API_TOKEN)
+    # 3. Проверка 1: Статус код должен быть 201
+    assert response.status_code == 201, f"Ожидался статус 201, но получен {response.status_code}. Ответ сервера: {response.text}"
+    # 4. Проверка 2: Парсим JSON из ответа и сверяем имя
+    response_data = response.json()
                                  
-                                 # Если сервер возвращает имя в поле 'name' (часто бывает 'name' или 'kit_name')
-                                 # Проверь документацию API, какое именно поле возвращает сервер.
-                                 # Допустим, сервер возвращает {"id": 123, "name": "123"}
+    # Если сервер возвращает имя в поле 'name' (часто бывает 'name' или 'kit_name')
+    # Проверь документацию API, какое именно поле возвращает сервер.
+    # Допустим, сервер возвращает {"id": 123, "name": "123"}
                                  
-                                 assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
-                                 assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
+    assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
+    assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
                              
-                                 print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
+    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
 
 # Тест 10 (негативный): Параметр не передан в запросе:
 

@@ -1,4 +1,4 @@
-URL_SERVICE = "https://a3b035f9-f354-4250-a337-a67238be4fde.serverhub.praktikum-services.ru"
+URL_SERVICE = "https://7a7b25c2-e735-4d80-8dc0-73f13216a708.serverhub.praktikum-services.ru"
 
 # DOC_PATH содержит путь к документации веб-сервиса.
 # Этот путь используется для формирования полного URL пути к документации, добавляя его к базовому URL сервиса.
