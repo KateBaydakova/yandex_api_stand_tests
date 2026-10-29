@@ -1,36 +1,10 @@
 import pytest
 # Импортируем нашу функцию и токен
 from sender_stand_request import post_new_client_kit
-from configuration import API_TOKEN  # Убедись, что в .env лежит реальный токен, если хочешь тест "вживую"
+from configuration import API_TOKEN
 
-def test_create_kit_success():
-    """Тест: создаем набор и проверяем, что сервер вернул 201 Created"""
-    
-    # 1. Подготовка данных (тело запроса)
-    # Эти данные должны соответствовать требованиям API из задания
-    test_kit_body = {
-        "name": "Test Kit for Automation",
-        "description": "Created by pytest",
-        "user_id": 12345  # Пример ID пользователя
-    }
 
-    # 2. Вызов функции
-    # Передаем тело запроса и токен
-    response = post_new_client_kit(kit_body=test_kit_body, auth_token=API_TOKEN)
-
-    # 3. Проверка результатов (Assert)
-    # Тестировщик проверяет:
-    # - Статус код 201 (ресурс создан) или 200 (успех)
-    # - Что в ответе есть ID созданного набора
-    
-    assert response.status_code == 201, f"Ожидался статус 201, но получен {response.status_code}. Ответ: {response.text}"
-    
-    response_data = response.json()
-    assert "id" in response_data, "В ответе сервера не найден ID созданного набора"
-    
-    print(f"✅ Набор успешно создан! ID: {response_data['id']}")
-
-   # Тест 1 (позитивный): Допустимое количество символов (1)
+# Тест 1 (позитивный): Допустимое количество символов (1)
 
 def test_positive_assert_name_one_letter():
     """
@@ -58,7 +32,6 @@ def test_positive_assert_name_one_letter():
     assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
     assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
 
-    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
 
     # Тест 2 (позитивный): Допустимое количество символов (511)
 
@@ -86,7 +59,6 @@ def test_positive_assert_name_511_letters():
     assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
     assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
 
-    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
 
     # Тест 3 (негативный): Количество символов меньше допустимого (0):
 
@@ -111,20 +83,11 @@ def test_negative_assert_code_400_empty_name():
     # Попробуем его достать и проверить, что там есть слово "name" или "empty".
     try:
         error_data = response.json()
-        # Проверяем, что сервер явно говорит про имя (зависит от реализации API)
-        # Например: {"error": "Name cannot be empty"} или {"name": ["This field is required"]}
-        # Если сервер возвращает просто текст, а не JSON, этот блок упадет в except.
-        
-        # Раскомментируй строки ниже, если знаешь точную структуру ошибки твоего API:
-        # assert "name" in error_data or "empty" in str(error_data), "Ошибка не содержит информации про поле name"
-        
-        print(f"✅ Сервер корректно отверг пустой запрос. Ответ: {error_data}")
+        assert error_data is not None
+       
     except ValueError:
-        # Если сервер вернул не JSON (например, HTML страницу ошибки), 
-        # мы всё равно считаем тест успешным, если статус 400.
-        print("✅ Сервер вернул статус 400. Тело ответа не является JSON (возможно, HTML).")
-
-    print("Тест негативного сценария пройден.")
+        
+        pass
 
     # Тест 4 (негативный): Количество символов больше допустимого (512):
 
@@ -147,20 +110,11 @@ def test_negative_assert_code_400_long_name():
     # Попробуем его достать и проверить, что там есть слово "name" или "empty".
     try:
         error_data = response.json()
-        # Проверяем, что сервер явно говорит про имя (зависит от реализации API)
-        # Например: {"error": "Name cannot be empty"} или {"name": ["This field is required"]}
-        # Если сервер возвращает просто текст, а не JSON, этот блок упадет в except.
-        
-        # Раскомментируй строки ниже, если знаешь точную структуру ошибки твоего API:
-        # assert "name" in error_data or "empty" in str(error_data), "Ошибка не содержит информации про поле name"
-        
-        print(f"✅ Сервер корректно отверг пустой запрос. Ответ: {error_data}")
+        assert error_data.get("error") and "length" in error_data["error"]
     except ValueError:
-        # Если сервер вернул не JSON (например, HTML страницу ошибки), 
-        # мы всё равно считаем тест успешным, если статус 400.
-        print("✅ Сервер вернул статус 400. Тело ответа не является JSON (возможно, HTML).")
+        
 
-    print("Тест негативного сценария пройден.")
+        pass
 
     # Тест 5 (позитивный): Разрешены английские буквы:
 
@@ -190,7 +144,6 @@ def test_positive_assert_name_english_letters():
     assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
     assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
 
-    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
 
     # Тест 6 (позитивный): Разрешены русские буквы:
 
@@ -218,7 +171,6 @@ def test_positive_assert_name_russian_letters():
     assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
     assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
     
-    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
 
         # Тест 7 (позитивный): Разрешены спецсимволы:
 
@@ -245,7 +197,7 @@ def test_positive_assert_name_special_symbols():
     assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
     assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
             
-    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
+
 
                  # Тест 8 (позитивный): Разрешены пробелы:
 
@@ -272,7 +224,7 @@ def test_positive_assert_name_blank_spaces():
     assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
     assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
                              
-    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
+
 
                   # Тест 9 (позитивный): Разрешены цифры:
 
@@ -299,7 +251,7 @@ def test_positive_assert_name_numbers():
     assert "name" in response_data, "В ответе сервера отсутствует поле 'name'"
     assert response_data["name"] == kit_body["name"], f"Имя в ответе ({response_data['name']}) не совпадает с именем в запросе ({kit_body['name']})"
                              
-    print(f"✅ Тест пройден! Создан набор с именем: {response_data['name']}")
+
 
 # Тест 10 (негативный): Параметр не передан в запросе:
 
@@ -323,20 +275,12 @@ def test_negative_assert_code_400_empty_parameter():
     # Попробуем его достать и проверить, что там есть слово "name" или "empty".
     try:
         error_data = response.json()
-        # Проверяем, что сервер явно говорит про имя (зависит от реализации API)
-        # Например: {"error": "Name cannot be empty"} или {"name": ["This field is required"]}
-        # Если сервер возвращает просто текст, а не JSON, этот блок упадет в except.
+        assert "name" in str(error_data) or "required" in str(error_data) or "missing" in str(error_data), \
+            f"Сервер вернул статус 400, но в ответе нет понятного сообщения об ошибке. Получено: {error_data}"
         
-        # Раскомментируй строки ниже, если знаешь точную структуру ошибки твоего API:
-        # assert "name" in error_data or "empty" in str(error_data), "Ошибка не содержит информации про поле name"
-        
-        print(f"✅ Сервер корректно отверг пустой запрос. Ответ: {error_data}")
     except ValueError:
-        # Если сервер вернул не JSON (например, HTML страницу ошибки), 
-        # мы всё равно считаем тест успешным, если статус 400.
-        print("✅ Сервер вернул статус 400. Тело ответа не является JSON (возможно, HTML).")
-
-    print("Тест негативного сценария пройден.")
+        assert len(response.text) > 10
+        
 
     # Тест 11 (негативный): Передан другой тип параметра (число):
 
@@ -361,17 +305,8 @@ def test_negative_assert_code_400_another_parameter():
     # Попробуем его достать и проверить, что там есть слово "name" или "empty".
     try:
         error_data = response.json()
-        # Проверяем, что сервер явно говорит про имя (зависит от реализации API)
-        # Например: {"error": "Name cannot be empty"} или {"name": ["This field is required"]}
-        # Если сервер возвращает просто текст, а не JSON, этот блок упадет в except.
+        assert "name" in str(error_data) and ("type" in str(error_data) or "invalid" in str(error_data) or "string" in str(error_data)), \
+            f"Сервер вернул статус 400, но в сообщении об ошибке нет понятных указаний на проблему с полем name. Получено: {error_data}
         
-        # Раскомментируй строки ниже, если знаешь точную структуру ошибки твоего API:
-        # assert "name" in error_data or "empty" in str(error_data), "Ошибка не содержит информации про поле name"
-        
-        print(f"✅ Сервер корректно отверг пустой запрос. Ответ: {error_data}")
     except ValueError:
-        # Если сервер вернул не JSON (например, HTML страницу ошибки), 
-        # мы всё равно считаем тест успешным, если статус 400.
-        print("✅ Сервер вернул статус 400. Тело ответа не является JSON (возможно, HTML).")
-
-    print("Тест негативного сценария пройден.")
+        assert len(response.text) > 10
