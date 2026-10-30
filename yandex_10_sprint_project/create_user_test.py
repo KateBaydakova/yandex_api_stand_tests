@@ -16,10 +16,8 @@ def test_create_user_and_kit():
     user_body = get_user_body("АннаТест")
     user_response = sender_stand_request.post_new_user(user_body)
     
-    # Проверка статуса
     assert user_response.status_code == 201, f"Ожидался статус 201, но получен {user_response.status_code}"
     
-    # Получаем токен
     user_json = user_response.json()
     assert "authToken" in user_json, "В ответе нет поля authToken"
     auth_token = user_json["authToken"]
@@ -32,6 +30,5 @@ def test_create_user_and_kit():
     # Проверка статуса создания набора
     assert kit_response.status_code in [200, 201], f"Ожидался 200 или 201, но получен {kit_response.status_code}"
     
-    # Можно добавить проверку, что набор действительно создался, если стенд это подтверждает
     kit_json = kit_response.json()
     assert kit_json.get("name") == "Тестовый набор", "Название набора не совпадает"
